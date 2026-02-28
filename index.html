@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)file:///C:/Users/eljer/Downloads/cregan-stark-full.html -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cregan Stark — Ficha · ASOIAF</title>
+<link href="./index_files/css2" rel="stylesheet">
+<style>
+:root {
+  --white:       #dde4ec;
+  --white-dim:   #9aabbc;
+  --white-muted: #5a6e80;
+  --accent:      #7a9ab8;
+  --accent-dim:  #3a5068;
+  --black:       #070c12;
+  --black-mid:   #0e1520;
+  --black-card:  #111a26;
+  --black-border:#1e2d3e;
+  --gold:        #c4a84f;
+  --green:       #5aab6e;
+  --red-stat:    #c05050;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{
+  width:100%;min-height:100%;
+  background:var(--black);
+  font-family:'IM Fell English',georgia,serif;
+  overflow-x:hidden;
+}
+
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9999;opacity:.5;
+}
+
+/* Snow */
+.snow-layer{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden;}
+.flake{
+  position:absolute;top:-6px;
+  background:rgba(200,220,240,0.6);border-radius:50%;
+  animation:snowfall var(--d) linear infinite var(--dl);
+  left:var(--l);width:var(--s);height:var(--s);
+}
+@keyframes snowfall{
+  0%  {transform:translateY(0) translateX(0);opacity:0;}
+  8%  {opacity:.7;}90%{opacity:.25;}
+  100%{transform:translateY(102vh) translateX(var(--x));opacity:0;}
+}
+
+/* ══════════════════════════
+   INTRO
+══════════════════════════ */
+#intro{
+  position:fixed;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--black);z-index:200;
+  transition:opacity .9s ease, transform .9s ease;
+}
+#intro.hide{opacity:0;transform:scale(1.03);pointer-events:none;}
+
+.intro-wrap{
+  position:relative;
+  width:min(540px,94vw);aspect-ratio:1;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.intro-wrap::before{
+  content:'';position:absolute;inset:-15%;
+  background:radial-gradient(ellipse at 50% 48%,rgba(100,150,200,.08) 0%,transparent 60%);
+  animation:breathe 5s ease-in-out infinite;pointer-events:none;
+}
+@keyframes breathe{0%,100%{opacity:.5;transform:scale(1);}50%{opacity:1;transform:scale(1.04);}}
+
+.orn-col{position:absolute;top:0;bottom:0;width:22%;display:flex;align-items:stretch;}
+.orn-col.left{left:0;}.orn-col.right{right:0;transform:scaleX(-1);}
+.orn-col svg{width:100%;height:100%;}
+
+.intro-topline{position:absolute;top:0;left:18%;right:18%;height:1px;
+  background:linear-gradient(to right,transparent,var(--accent),transparent);
+  box-shadow:0 0 10px rgba(120,170,220,.2);}
+.intro-bottomline{position:absolute;bottom:0;left:18%;right:18%;height:1px;
+  background:linear-gradient(to right,transparent,var(--accent),transparent);}
+
+.intro-house{font-family:'Cinzel',serif;font-size:clamp(.52rem,1.8vw,.68rem);
+  color:var(--white-muted);letter-spacing:.5em;text-transform:uppercase;
+  margin-bottom:6px;opacity:0;animation:dropIn .8s ease both;animation-delay:.2s;}
+.intro-name{
+  font-family:'Cinzel Decorative',serif;font-weight:900;
+  font-size:clamp(2rem,8.5vw,3.3rem);
+  color:var(--white);letter-spacing:.13em;line-height:1;
+  text-shadow:0 0 30px rgba(120,170,220,.3),0 0 70px rgba(100,150,200,.1);
+  opacity:0;
+  animation:nameReveal 1.1s cubic-bezier(.16,1,.3,1) both,nameBreath 6s ease-in-out infinite;
+  animation-delay:.4s,1.5s;
+}
+@keyframes nameReveal{from{opacity:0;transform:translateY(-16px);}to{opacity:1;transform:translateY(0);}}
+@keyframes nameBreath{
+  0%,100%{text-shadow:0 0 30px rgba(120,170,220,.3),0 0 70px rgba(100,150,200,.1);}
+  50%    {text-shadow:0 0 50px rgba(140,190,240,.55),0 0 100px rgba(100,150,200,.2);}
+}
+.intro-surname-row{
+  display:flex;align-items:center;gap:10px;margin-top:4px;margin-bottom:3px;
+  opacity:0;animation:dropIn .8s ease both;animation-delay:.7s;
+}
+.intro-surname-line{width:38px;height:1px;background:var(--accent-dim);}
+.intro-surname{font-family:'Cinzel',serif;font-size:clamp(.75rem,2.5vw,.92rem);
+  color:var(--accent);letter-spacing:.4em;text-transform:uppercase;}
+.intro-words{
+  font-family:'IM Fell English',serif;font-style:italic;
+  font-size:clamp(.66rem,2vw,.8rem);color:var(--white-muted);margin-bottom:12px;
+  opacity:0;animation:dropIn .8s ease both;animation-delay:.9s;
+}
+.intro-portrait{
+  position:relative;width:50%;aspect-ratio:3/3.4;
+  border:1px solid var(--accent-dim);
+  box-shadow:0 0 25px rgba(100,150,200,.08),inset 0 0 30px rgba(0,0,0,.8);
+  overflow:hidden;
+  opacity:0;animation:portraitReveal 1.3s cubic-bezier(.16,1,.3,1) both;animation-delay:.5s;
+}
+@keyframes portraitReveal{
+  from{opacity:0;clip-path:inset(40% 25% 40% 25%);}
+  to  {opacity:1;clip-path:inset(0 0 0 0);}
+}
+.intro-portrait::before,.intro-portrait::after{
+  content:'';position:absolute;width:16px;height:16px;
+  border-color:var(--white-dim);border-style:solid;z-index:2;
+}
+.intro-portrait::before{top:-1px;left:-1px;border-width:2px 0 0 2px;}
+.intro-portrait::after {bottom:-1px;right:-1px;border-width:0 2px 2px 0;}
+.intro-portrait-img{
+  width:100%;height:100%;object-fit:cover;object-position:center top;
+  filter:grayscale(30%) contrast(1.05);
+}
+.intro-portrait-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(7,12,18,.2) 0%,rgba(7,12,18,0) 40%,rgba(7,12,18,.6) 100%);
+}
+
+.intro-emblem{margin-top:10px;opacity:0;animation:dropIn .8s ease both;animation-delay:1s;}
+.intro-emblem img{width:42px;filter:brightness(0) invert(.7);}
+
+.intro-cta{
+  margin-top:14px;font-family:'Cinzel',serif;font-size:.58rem;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--white-muted);
+  border:1px solid var(--accent-dim);padding:7px 22px;cursor:pointer;
+  opacity:0;animation:ctaBlink 2s ease-in-out infinite;animation-delay:1.6s;
+  transition:all .3s;
+}
+.intro-cta:hover{color:var(--white);border-color:var(--accent);box-shadow:0 0 12px rgba(120,170,220,.15);}
+@keyframes ctaBlink{0%,100%{opacity:.3;}50%{opacity:1;}}
+
+.spark{
+  position:absolute;border-radius:50%;background:rgba(200,220,240,.8);
+  animation:sparkle var(--sd) ease-in-out infinite var(--ss);
+  top:var(--sy);left:var(--sx);width:2px;height:2px;opacity:0;
+}
+@keyframes sparkle{0%,100%{opacity:0;transform:scale(.4);}50%{opacity:.9;transform:scale(1);}}
+@keyframes dropIn{from{opacity:0;transform:translateY(-14px);}to{opacity:1;transform:translateY(0);}}
+
+/* ══════════════════════════
+   MAIN SHEET
+══════════════════════════ */
+#sheet-wrap{
+  display:flex;align-items:flex-start;justify-content:center;
+  min-height:100vh;padding:36px 24px;gap:0;
+  opacity:0;transition:opacity .9s ease;pointer-events:none;
+}
+#sheet-wrap.show{opacity:1;pointer-events:auto;}
+
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+.reveal-left{opacity:0;transform:translateX(-18px);transition:opacity .72s ease,transform .72s ease;}
+.reveal-left.in{opacity:1;transform:translateX(0);}
+.reveal-right{opacity:0;transform:translateX(18px);transition:opacity .72s ease,transform .72s ease;}
+.reveal-right.in{opacity:1;transform:translateX(0);}
+
+/* ════════ LEFT PANEL ════════ */
+.panel-left{
+  width:270px;flex-shrink:0;
+  display:flex;flex-direction:column;
+  position:sticky;top:36px;align-self:flex-start;
+  border:1px solid var(--black-border);
+  background:linear-gradient(160deg,#0d1620 0%,var(--black-mid) 60%,#080e16 100%);
+  overflow:hidden;
+}
+
+/* Corner rune marks on the whole left panel */
+.left-corner{
+  position:absolute;width:50px;height:50px;pointer-events:none;z-index:10;opacity:.55;
+}
+.left-corner.tl{top:0;left:0;}
+.left-corner.tr{top:0;right:0;transform:scaleX(-1);}
+.left-corner.bl{bottom:0;left:0;transform:scaleY(-1);}
+.left-corner.br{bottom:0;right:0;transform:scale(-1,-1);}
+
+/* Banner image */
+.banner-img{
+  width:100%;height:140px;object-fit:cover;object-position:center;
+  display:block;
+  filter:grayscale(20%) contrast(1.1);
+}
+.banner-gradient{
+  height:40px;margin-top:-40px;position:relative;
+  background:linear-gradient(180deg,transparent 0%,var(--black-mid) 100%);
+}
+
+/* Avatar */
+.avatar-wrap{
+  display:flex;justify-content:center;
+  margin-top:-50px;position:relative;z-index:5;margin-bottom:10px;
+}
+.avatar-ring{
+  width:96px;height:96px;border-radius:50%;
+  padding:3px;
+  background:var(--black-mid);
+  box-shadow:0 0 22px rgba(120,170,220,.3),0 0 40px rgba(0,0,0,.7);
+}
+.avatar-img{
+  width:100%;height:100%;border-radius:50%;
+  object-fit:cover;object-position:center top;
+  border:2px solid var(--black-mid);
+  filter:grayscale(15%);
+}
+
+/* Name block */
+.name-block{
+  text-align:center;padding:0 16px 14px;position:relative;
+}
+.name-house{font-family:'Cinzel',serif;font-size:.52rem;
+  color:var(--white-muted);letter-spacing:.4em;text-transform:uppercase;margin-bottom:4px;}
+.name-main{
+  font-family:'IM Fell English',serif;font-style:italic;
+  font-size:1.65rem;color:var(--white);
+  letter-spacing:.08em;line-height:1;
+  text-shadow:0 0 20px rgba(120,170,220,.2);
+  animation:nameBreath 6s ease-in-out infinite;
+}
+.name-sub{
+  font-family:'Cinzel',serif;font-size:.62rem;
+  color:var(--accent);letter-spacing:.12em;text-transform:uppercase;
+  margin-top:4px;line-height:1.4;
+}
+
+/* Sigil row */
+.sigil-row{
+  display:flex;align-items:center;gap:8px;
+  padding:0 16px 12px;
+}
+.sigil-line{flex:1;height:1px;background:linear-gradient(to right,transparent,var(--accent-dim));}
+.sigil-line.r{background:linear-gradient(to left,transparent,var(--accent-dim));}
+.sigil-img{width:70px;filter:brightness(0) invert(.55);}
+
+/* Stat bars */
+.stat-bars{
+  padding:10px 14px 4px;
+  border-top:1px solid var(--black-border);
+}
+.stat-row{
+  display:flex;align-items:center;gap:8px;margin-bottom:7px;
+}
+.stat-label{
+  font-family:'Cinzel',serif;font-size:.52rem;
+  color:var(--white-muted);letter-spacing:.08em;
+  text-transform:uppercase;width:26px;flex-shrink:0;
+}
+.stat-val{
+  font-family:'IM Fell English',serif;font-style:italic;
+  font-size:.95rem;color:var(--white);
+  text-shadow:0 0 10px rgba(120,170,220,.3);
+  width:30px;flex-shrink:0;text-align:right;
+}
+.stat-bar-track{
+  flex:1;height:4px;background:#0a1220;
+  border-radius:2px;overflow:hidden;
+}
+.stat-bar-fill{
+  height:100%;border-radius:2px;
+  background:linear-gradient(to right,var(--accent-dim),var(--accent));
+  box-shadow:0 0 6px rgba(120,170,220,.3);
+}
+
+/* Quote strip */
+.quote-strip{
+  margin:8px 0;padding:9px 16px;
+  border-top:1px solid var(--black-border);
+  border-bottom:1px solid var(--black-border);
+  text-align:center;
+  font-family:'IM Fell English',serif;font-style:italic;
+  font-size:.62rem;letter-spacing:.04em;color:var(--accent);
+  line-height:1.5;
+}
+
+/* Recordum image */
+.recordum-wrap{
+  padding:10px 14px;
+  border-top:1px solid var(--black-border);
+}
+.recordum-label{
+  font-family:'Cinzel',serif;font-size:.55rem;
+  color:var(--white-muted);letter-spacing:.18em;text-transform:uppercase;
+  text-align:center;margin-bottom:7px;
+}
+.recordum-img{
+  width:100%;border:1px solid var(--black-border);
+  filter:grayscale(30%) contrast(1.05);
+  display:block;
+}
+
+/* Credit strip */
+.credit-strip{
+  padding:6px 14px;text-align:right;
+  font-family:georgia,serif;font-size:.5rem;
+  letter-spacing:.12em;color:var(--black-border);
+  text-transform:uppercase;
+  border-top:1px solid var(--black-border);
+}
+
+/* ── Vertical divider ── */
+.panel-divider{
+  width:2px;flex-shrink:0;
+  background:linear-gradient(to bottom,
+    transparent 0%, var(--accent-dim) 6%,
+    var(--accent) 25%, var(--accent-dim) 50%,
+    var(--accent) 75%, var(--accent-dim) 94%,
+    transparent 100%
+  );
+  margin:0 3px;
+  box-shadow:0 0 8px rgba(120,170,220,.07);
+  position:relative;
+}
+.panel-divider::before,.panel-divider::after{
+  content:'';position:absolute;
+  left:50%;transform:translateX(-50%);
+  width:7px;height:7px;background:var(--accent);
+  rotate:45deg;box-shadow:0 0 5px rgba(120,170,220,.4);
+}
+.panel-divider::before{top:8%;}
+.panel-divider::after {bottom:8%;}
+
+/* ════════ RIGHT PANEL ════════ */
+.panel-right{
+  flex:1;display:flex;flex-direction:column;gap:9px;
+  min-width:0;max-width:580px;
+}
+
+/* Section blocks */
+.s-block{
+  background:linear-gradient(160deg,rgba(13,22,38,.85) 0%,rgba(10,16,28,.9) 100%);
+  border:1px solid var(--black-border);position:relative;
+  overflow:hidden;
+}
+.s-block::before,.s-block::after{
+  content:'';position:absolute;width:9px;height:9px;
+  border-color:var(--accent-dim);border-style:solid;z-index:1;
+}
+.s-block::before{top:-1px;left:-1px;border-width:2px 0 0 2px;}
+.s-block::after {bottom:-1px;right:-1px;border-width:0 2px 2px 0;}
+
+/* Left-accent block variant */
+.s-block.accent-left{border-left:3px solid var(--accent);}
+.s-block.accent-subtle{border-left:3px solid var(--accent-dim);}
+
+.s-title{
+  font-family:'Cinzel',serif;font-size:.68rem;
+  color:var(--white);background:#0a1018;
+  letter-spacing:.12em;text-transform:uppercase;
+  font-style:italic;
+  padding:5px 10px;margin-bottom:8px;
+  border-radius:2px;letter-spacing:1px;
+  display:inline-block;
+}
+
+/* Two col layout inside block */
+.two-col{display:flex;gap:9px;padding:10px 12px 12px;}
+.two-col > *{flex:1;min-width:0;}
+
+/* Data grid */
+.data-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  padding:10px 12px 8px;gap:4px;
+}
+.data-row{
+  display:flex;align-items:center;
+  border:1px solid var(--black-border);
+  background:rgba(10,16,28,.6);
+  position:relative;overflow:hidden;transition:all .3s;
+}
+.data-row.full{grid-column:1/-1;}
+.data-row:hover{border-color:var(--accent-dim);background:rgba(18,28,44,.9);}
+.data-row:hover::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;
+  width:2px;background:var(--accent);box-shadow:0 0 6px rgba(120,170,220,.5);
+}
+.d-label{
+  font-family:'Cinzel',serif;font-size:.52rem;
+  color:var(--accent);letter-spacing:.06em;
+  padding:6px 8px;white-space:nowrap;
+  border-right:1px solid var(--black-border);
+  text-transform:uppercase;min-width:72px;
+  font-weight:700;
+}
+.d-val{
+  font-family:'IM Fell English',serif;font-size:.8rem;
+  color:var(--white);padding:6px 10px;
+}
+.d-val .exp-g{color:var(--green);}
+.d-val .exp-r{color:var(--red-stat);}
+.d-val .exp-y{color:var(--gold);}
+
+/* Exp bar row */
+.exp-row{padding:4px 12px 10px;}
+.exp-label{font-family:'Cinzel',serif;font-size:.5rem;
+  color:var(--white-muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;}
+.exp-track{height:3px;background:#0a1018;border:1px solid var(--black-border);}
+.exp-fill{height:100%;width:0;
+  background:linear-gradient(to right,var(--accent-dim),var(--accent));
+  box-shadow:0 0 6px rgba(120,170,220,.25);
+  transition:width 1.8s cubic-bezier(.16,1,.3,1);}
+
+/* Text block */
+.text-block{
+  padding:10px 12px 12px;
+  font-family:'IM Fell English',serif;font-style:italic;
+  font-size:.82rem;line-height:1.55;color:var(--white);
+}
+
+/* Habilidades / inventario */
+.hab-item{
+  font-size:.8rem;line-height:1.5;color:var(--white);
+  font-family:'IM Fell English',serif;font-style:italic;
+  margin-bottom:2px;padding:2px 0;
+  border-bottom:1px solid var(--black-border);
+}
+.hab-item::before{content:'— ';color:var(--accent-dim);}
+
+/* Characteristics */
+.char-item{
+  font-size:.8rem;line-height:1.5;color:var(--white);
+  font-family:'IM Fell English',serif;font-style:italic;
+  padding:2px 0;border-bottom:1px solid var(--black-border);
+}
+.char-item::before{content:'— ';color:var(--accent-dim);}
+.char-label{color:var(--accent);}
+
+/* Dados row */
+.dados-row{
+  display:flex;gap:6px;padding:8px 12px 10px;flex-wrap:wrap;
+}
+.dado-item{
+  flex:1;min-width:60px;
+  border:1px solid var(--black-border);
+  text-align:center;padding:6px 4px;
+  background:rgba(10,16,28,.7);
+  transition:background .3s;
+}
+.dado-item:hover{background:rgba(18,28,44,.9);border-color:var(--accent-dim);}
+.dado-name{font-family:'Cinzel',serif;font-size:.48rem;
+  color:var(--white-muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px;}
+.dado-val{
+  font-family:'IM Fell English',serif;font-style:italic;
+  font-size:1rem;color:var(--white);
+  text-shadow:0 0 8px rgba(120,170,220,.25);
+}
+
+/* Log entries */
+.log-wrap{padding:10px 12px 12px;}
+.log-entry{
+  display:flex;gap:10px;margin-bottom:8px;align-items:flex-start;
+  padding:5px 7px;border:1px solid transparent;transition:all .3s;
+}
+.log-entry:hover{border-color:var(--black-border);background:rgba(120,170,220,.03);}
+.log-date{
+  font-family:'Cinzel',serif;font-size:.5rem;color:var(--white-muted);
+  border:1px solid var(--black-border);padding:2px 6px;
+  white-space:nowrap;flex-shrink:0;background:rgba(7,12,18,.9);margin-top:2px;
+}
+.log-text{
+  font-family:'IM Fell English',serif;font-size:.8rem;
+  color:var(--white);font-style:italic;line-height:1.5;
+}
+.log-text .exp-g{color:var(--green);font-style:normal;font-weight:bold;}
+.log-text .exp-y{color:var(--gold);font-style:normal;font-weight:bold;}
+
+/* Banner divider image */
+.banner-div{
+  width:calc(100% + 2px);margin:0 -1px;height:60px;
+  object-fit:cover;object-position:center;
+  display:block;
+  filter:grayscale(30%) contrast(1.1);
+  border-top:1px solid var(--black-border);
+  border-bottom:1px solid var(--black-border);
+  opacity:.7;
+}
+
+/* Quote banner (inside right panel) */
+.quote-banner{
+  padding:10px 20px;
+  background:rgba(7,12,18,.85);
+  border:1px solid var(--black-border);
+  text-align:center;
+  font-family:'IM Fell English',serif;font-style:italic;
+  font-size:.68rem;letter-spacing:.2em;color:var(--accent);
+  text-transform:uppercase;
+  position:relative;
+}
+.quote-banner::before,.quote-banner::after{content:'❄';margin:0 8px;opacity:.6;}
+
+/* Motto bottom */
+.motto-bottom{
+  text-align:center;padding:8px 14px 10px;
+  border-top:1px solid var(--black-border);
+  font-family:'IM Fell English',serif;font-style:italic;
+  font-size:.62rem;color:var(--white-muted);letter-spacing:.06em;
+}
+
+/* Responsive */
+@media(max-width:720px){
+  #sheet-wrap{flex-direction:column;padding:16px 12px;gap:10px;}
+  .panel-left{width:100%;position:static;}
+  .panel-divider{width:100%;height:2px;margin:4px 0;
+    background:linear-gradient(to right,transparent,var(--accent-dim) 20%,var(--accent) 50%,var(--accent-dim) 80%,transparent);}
+  .panel-divider::before{top:50%;left:15%;transform:translateY(-50%)rotate(45deg);}
+  .panel-divider::after {top:50%;left:auto;right:15%;transform:translateY(-50%)rotate(45deg);}
+  .data-grid{grid-template-columns:1fr;}
+  .data-row.full{grid-column:1;}
+  .two-col{flex-direction:column;}
+}
+
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--black);}
+::-webkit-scrollbar-thumb{background:var(--accent-dim);}
+</style>
+</head>
+<body>
+
+<!-- Snow -->
+<div class="snow-layer">
+  <div class="flake" style="--l:4%;  --d:13s;--dl:-2s; --s:2px;--x:16px"></div>
+  <div class="flake" style="--l:13%; --d:9s; --dl:-5s; --s:3px;--x:-11px"></div>
+  <div class="flake" style="--l:23%; --d:16s;--dl:0s;  --s:2px;--x:8px"></div>
+  <div class="flake" style="--l:35%; --d:11s;--dl:-3s; --s:2px;--x:-18px"></div>
+  <div class="flake" style="--l:48%; --d:14s;--dl:-7s; --s:3px;--x:12px"></div>
+  <div class="flake" style="--l:59%; --d:10s;--dl:-1s; --s:2px;--x:-9px"></div>
+  <div class="flake" style="--l:69%; --d:17s;--dl:-4s; --s:2px;--x:20px"></div>
+  <div class="flake" style="--l:78%; --d:8s; --dl:-6s; --s:3px;--x:-8px"></div>
+  <div class="flake" style="--l:87%; --d:12s;--dl:-2s; --s:2px;--x:14px"></div>
+  <div class="flake" style="--l:95%; --d:15s;--dl:-8s; --s:2px;--x:-12px"></div>
+  <div class="flake" style="--l:42%; --d:7s; --dl:-3s; --s:2px;--x:-5px"></div>
+</div>
+
+<!-- ══════════ INTRO ══════════ -->
+<div id="intro" class="hide">
+  <div class="intro-wrap">
+
+    <div class="spark" style="--sx:8%; --sy:16%;--sd:2.5s;--ss:0s"></div>
+    <div class="spark" style="--sx:92%;--sy:13%;--sd:3.2s;--ss:.6s"></div>
+    <div class="spark" style="--sx:5%; --sy:74%;--sd:2.8s;--ss:1.1s"></div>
+    <div class="spark" style="--sx:94%;--sy:70%;--sd:2.1s;--ss:.3s"></div>
+    <div class="spark" style="--sx:48%;--sy:4%; --sd:3.6s;--ss:.9s"></div>
+    <div class="spark" style="--sx:72%;--sy:88%;--sd:3.1s;--ss:.5s"></div>
+
+    <div class="intro-topline"></div>
+
+    <!-- Weirwood branch columns -->
+    <div class="orn-col left">
+      <svg viewBox="0 0 90 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M56,0 C53,28 50,58 52,88 C54,118 62,138 58,168 C54,198 44,212 46,244 C48,274 58,286 54,318 C50,350 38,362 40,394 C42,426 54,440 50,472 C48,488 44,496 42,500" stroke="rgba(120,170,220,0.45)" stroke-width="2"></path>
+        <path d="M52,44  C46,36 30,33 20,42 C12,50 18,62 28,58 C36,55 36,46 30,42" stroke="rgba(120,170,220,0.32)" stroke-width="1.2"></path>
+        <path d="M54,96  C46,84 28,82 16,92 C8,102 16,116 28,108 C38,102 38,90 30,84" stroke="rgba(120,170,220,0.32)" stroke-width="1.2"></path>
+        <path d="M52,154 C42,140 22,138 10,150 C2,162 12,176 26,167 C38,158 36,146 28,140" stroke="rgba(120,170,220,0.26)" stroke-width="1.1"></path>
+        <path d="M54,214 C44,198 24,196 12,208 C4,220 14,236 28,226 C40,218 38,204 30,196" stroke="rgba(120,170,220,0.26)" stroke-width="1.1"></path>
+        <path d="M52,275 C42,262 24,260 12,272 C4,284 14,298 28,290 C40,282 38,268 30,260" stroke="rgba(120,170,220,0.22)" stroke-width="1"></path>
+        <path d="M54,336 C44,322 24,320 12,332 C4,344 14,358 28,350 C40,342 38,328 30,320" stroke="rgba(120,170,220,0.22)" stroke-width="1"></path>
+        <path d="M52,396 C42,384 26,382 14,394 C6,406 16,420 30,412 C42,404 40,390 32,382" stroke="rgba(120,170,220,0.2)" stroke-width="1"></path>
+        <circle cx="52" cy="44" r="3.5" fill="rgba(120,170,220,0.5)"></circle>
+        <circle cx="54" cy="96" r="3" fill="rgba(120,170,220,0.44)"></circle>
+        <circle cx="52" cy="154" r="3" fill="rgba(120,170,220,0.38)"></circle>
+        <circle cx="54" cy="214" r="3" fill="rgba(120,170,220,0.35)"></circle>
+        <circle cx="52" cy="275" r="2.5" fill="rgba(120,170,220,0.3)"></circle>
+        <circle cx="54" cy="336" r="2.5" fill="rgba(120,170,220,0.28)"></circle>
+        <circle cx="52" cy="396" r="2.5" fill="rgba(120,170,220,0.25)"></circle>
+        <text x="24" y="130" font-size="9" fill="rgba(120,170,220,0.2)" font-family="serif">❄</text>
+        <text x="20" y="252" font-size="10" fill="rgba(120,170,220,0.16)" font-family="serif">❄</text>
+        <text x="22" y="375" font-size="8" fill="rgba(120,170,220,0.16)" font-family="serif">❄</text>
+      </svg>
+    </div>
+    <div class="orn-col right">
+      <svg viewBox="0 0 90 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M56,0 C53,28 50,58 52,88 C54,118 62,138 58,168 C54,198 44,212 46,244 C48,274 58,286 54,318 C50,350 38,362 40,394 C42,426 54,440 50,472 C48,488 44,496 42,500" stroke="rgba(120,170,220,0.45)" stroke-width="2"></path>
+        <path d="M52,44  C46,36 30,33 20,42 C12,50 18,62 28,58 C36,55 36,46 30,42" stroke="rgba(120,170,220,0.32)" stroke-width="1.2"></path>
+        <path d="M54,96  C46,84 28,82 16,92 C8,102 16,116 28,108 C38,102 38,90 30,84" stroke="rgba(120,170,220,0.32)" stroke-width="1.2"></path>
+        <path d="M52,154 C42,140 22,138 10,150 C2,162 12,176 26,167 C38,158 36,146 28,140" stroke="rgba(120,170,220,0.26)" stroke-width="1.1"></path>
+        <path d="M54,214 C44,198 24,196 12,208 C4,220 14,236 28,226 C40,218 38,204 30,196" stroke="rgba(120,170,220,0.26)" stroke-width="1.1"></path>
+        <path d="M52,275 C42,262 24,260 12,272 C4,284 14,298 28,290 C40,282 38,268 30,260" stroke="rgba(120,170,220,0.22)" stroke-width="1"></path>
+        <path d="M54,336 C44,322 24,320 12,332 C4,344 14,358 28,350 C40,342 38,328 30,320" stroke="rgba(120,170,220,0.22)" stroke-width="1"></path>
+        <path d="M52,396 C42,384 26,382 14,394 C6,406 16,420 30,412 C42,404 40,390 32,382" stroke="rgba(120,170,220,0.2)" stroke-width="1"></path>
+        <circle cx="52" cy="44" r="3.5" fill="rgba(120,170,220,0.5)"></circle>
+        <circle cx="54" cy="96" r="3" fill="rgba(120,170,220,0.44)"></circle>
+        <circle cx="52" cy="154" r="3" fill="rgba(120,170,220,0.38)"></circle>
+        <circle cx="54" cy="214" r="3" fill="rgba(120,170,220,0.35)"></circle>
+        <circle cx="52" cy="275" r="2.5" fill="rgba(120,170,220,0.3)"></circle>
+        <circle cx="54" cy="336" r="2.5" fill="rgba(120,170,220,0.28)"></circle>
+        <circle cx="52" cy="396" r="2.5" fill="rgba(120,170,220,0.25)"></circle>
+        <text x="24" y="130" font-size="9" fill="rgba(120,170,220,0.2)" font-family="serif">❄</text>
+        <text x="20" y="252" font-size="10" fill="rgba(120,170,220,0.16)" font-family="serif">❄</text>
+        <text x="22" y="375" font-size="8" fill="rgba(120,170,220,0.16)" font-family="serif">❄</text>
+      </svg>
+    </div>
+
+    <div class="intro-house">Casa Stark · Invernalia · El Norte</div>
+    <div class="intro-name">CREGAN</div>
+    <div class="intro-surname-row">
+      <div class="intro-surname-line"></div>
+      <div class="intro-surname">Stark</div>
+      <div class="intro-surname-line"></div>
+    </div>
+    <div class="intro-words">Señor de Invernalia · Guardián del Norte</div>
+
+    <div class="intro-portrait">
+      <img class="intro-portrait-img" src="./index_files/GSadOuC.png" alt="Cregan Stark">
+      <div class="intro-portrait-overlay"></div>
+    </div>
+
+    <div class="intro-emblem">
+      <img src="./index_files/kZvWHB1.png" alt="House Stark sigil">
+    </div>
+
+    <div class="intro-bottomline"></div>
+    <div class="intro-cta" onclick="openSheet()">❄ &nbsp;Abrir Ficha&nbsp; ❄</div>
+  </div>
+</div>
+
+<!-- ══════════ MAIN SHEET ══════════ -->
+<div id="sheet-wrap" class="show">
+
+  <!-- ════ LEFT PANEL ════ -->
+  <div class="panel-left reveal-left in" id="rL0">
+
+    <!-- Corner marks -->
+    <svg class="left-corner tl" viewBox="0 0 50 50" fill="none">
+      <path d="M2 2 L22 2" stroke="#7a9ab8" stroke-width="1.5" stroke-linecap="square"></path>
+      <path d="M2 2 L2 22" stroke="#7a9ab8" stroke-width="1.5" stroke-linecap="square"></path>
+      <path d="M8 8 L8 20" stroke="#6a9ab8" stroke-width="1.2" stroke-linecap="square"></path>
+      <path d="M8 11 L13 8" stroke="#6a9ab8" stroke-width="1.2" stroke-linecap="square"></path>
+      <path d="M8 15 L13 18" stroke="#6a9ab8" stroke-width="1.2" stroke-linecap="square"></path>
+      <path d="M16 8 L22 8 L16 16 L22 16" stroke="#5a8ab0" stroke-width="1.2" stroke-linecap="square"></path>
+    </svg>
+    <svg class="left-corner tr" viewBox="0 0 50 50" fill="none">
+      <path d="M2 2 L22 2" stroke="#7a9ab8" stroke-width="1.5" stroke-linecap="square"></path>
+      <path d="M2 2 L2 22" stroke="#7a9ab8" stroke-width="1.5" stroke-linecap="square"></path>
+      <path d="M8 8 L8 20" stroke="#6a9ab8" stroke-width="1.2" stroke-linecap="square"></path>
+      <path d="M8 11 L13 8" stroke="#6a9ab8" stroke-width="1.2" stroke-linecap="square"></path>
+      <path d="M8 15 L13 18" stroke="#6a9ab8" stroke-width="1.2" stroke-linecap="square"></path>
+      <path d="M16 8 L22 8 L16 16 L22 16" stroke="#5a8ab0" stroke-width="1.2" stroke-linecap="square"></path>
+    </svg>
+    <svg class="left-corner bl" viewBox="0 0 50 50" fill="none">
+      <path d="M2 2 L22 2" stroke="#7a9ab8" stroke-width="1.5" stroke-linecap="square"></path>
+      <path d="M2 2 L2 22" stroke="#7a9ab8" stroke-width="1.5" stroke-linecap="square"></path>
+      <path d="M8 8 L8 20" stroke="#6a9ab8" stroke-width="1.2" stroke-linecap="square"></path>
+      <path d="M8 11 L13 8" stroke="#6a9ab8" stroke-width="1.2" stroke-linecap="square"></path>
+      <path d="M8 15 L13 18" stroke="#6a9ab8" stroke-width="1.2" stroke-linecap="square"></path>
+      <path d="M16 8 L22 8 L16 16 L22 16" stroke="#5a8ab0" stroke-width="1.2" stroke-linecap="square"></path>
+    </svg>
+    <svg class="left-corner br" viewBox="0 0 50 50" fill="none">
+      <path d="M2 2 L22 2" stroke="#7a9ab8" stroke-width="1.5" stroke-linecap="square"></path>
+      <path d="M2 2 L2 22" stroke="#7a9ab8" stroke-width="1.5" stroke-linecap="square"></path>
+      <path d="M8 8 L8 20" stroke="#6a9ab8" stroke-width="1.2" stroke-linecap="square"></path>
+      <path d="M8 11 L13 8" stroke="#6a9ab8" stroke-width="1.2" stroke-linecap="square"></path>
+      <path d="M8 15 L13 18" stroke="#6a9ab8" stroke-width="1.2" stroke-linecap="square"></path>
+      <path d="M16 8 L22 8 L16 16 L22 16" stroke="#5a8ab0" stroke-width="1.2" stroke-linecap="square"></path>
+    </svg>
+
+    <!-- Banner -->
+    <img class="banner-img" src="./index_files/GSadOuC.png" alt="Invernalia">
+    <div class="banner-gradient"></div>
+
+    <!-- Avatar -->
+    <div class="avatar-wrap">
+      <div class="avatar-ring">
+        <img class="avatar-img" src="./index_files/gwT9Iyl.png" alt="Cregan Stark">
+      </div>
+    </div>
+
+    <!-- Name -->
+    <div class="name-block">
+      <div class="name-house">Casa Stark · El Norte</div>
+      <div class="name-main">Cregan Stark</div>
+      <div class="name-sub">Señor de Invernalia<br>Guardián del Norte</div>
+    </div>
+
+    <!-- Sigil -->
+    <div class="sigil-row">
+      <div class="sigil-line"></div>
+      <img class="sigil-img" src="./index_files/Qa419Jq.png" alt="Stark">
+      <div class="sigil-line r"></div>
+    </div>
+
+    <!-- Stat bars -->
+    <div class="stat-bars">
+      <div class="stat-row">
+        <div class="stat-label">VIT</div>
+        <div class="stat-val">200</div>
+        <div class="stat-bar-track"><div class="stat-bar-fill" style="width:100%"></div></div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-label">EN</div>
+        <div class="stat-val">100</div>
+        <div class="stat-bar-track"><div class="stat-bar-fill" style="width:50%"></div></div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-label">FUE</div>
+        <div class="stat-val">10</div>
+        <div class="stat-bar-track"><div class="stat-bar-fill" style="width:50%"></div></div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-label">DES</div>
+        <div class="stat-val">10</div>
+        <div class="stat-bar-track"><div class="stat-bar-fill" style="width:50%"></div></div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-label">VEL</div>
+        <div class="stat-val">5</div>
+        <div class="stat-bar-track"><div class="stat-bar-fill" style="width:25%"></div></div>
+      </div>
+    </div>
+
+    <!-- Quote -->
+    <div class="quote-strip">
+      "They wish now not for the good of the realm, but for the satisfaction of vengeance."
+    </div>
+
+    <!-- Recordum -->
+    <div class="recordum-wrap">
+      <div class="recordum-label">❄ Recordum ❄</div>
+      <img class="recordum-img" src="./index_files/QzKjp02.png" alt="Recordum">
+    </div>
+
+    <div class="credit-strip">© code by LaNine · edited by Meraxes</div>
+  </div>
+
+  <!-- ── Divider ── -->
+  <div class="panel-divider reveal in" id="rDiv" style="transition-delay:.35s"></div>
+
+  <!-- ════ RIGHT PANEL ════ -->
+  <div class="panel-right">
+
+    <!-- Información -->
+    <div class="s-block accent-left reveal-right in" id="rR0">
+      <div style="padding:10px 12px 0;">
+        <div class="s-title">❄ &nbsp;Información</div>
+      </div>
+      <div class="data-grid">
+        <div class="data-row">
+          <div class="d-label">Usuario</div><div class="d-val">Korengal</div>
+        </div>
+        <div class="data-row">
+          <div class="d-label">Rango</div><div class="d-val">I</div>
+        </div>
+        <div class="data-row">
+          <div class="d-label">Región</div><div class="d-val">El Norte</div>
+        </div>
+        <div class="data-row">
+          <div class="d-label">Edad</div><div class="d-val">19 años</div>
+        </div>
+        <div class="data-row">
+          <div class="d-label">Sexo</div><div class="d-val">Masculino</div>
+        </div>
+        <div class="data-row">
+          <div class="d-label">Casa</div><div class="d-val">Stark de Invernalia</div>
+        </div>
+        <div class="data-row full">
+          <div class="d-label">Títulos</div>
+          <div class="d-val">Señor de Invernalia y Guardián del Norte</div>
+        </div>
+        <div class="data-row">
+          <div class="d-label">EXP</div>
+          <div class="d-val"><span class="exp-g">000</span> / <span class="exp-r">000</span> / <span class="exp-y">000</span></div>
+        </div>
+        <div class="data-row">
+          <div class="d-label">Ingreso</div><div class="d-val">xx.xx.xx</div>
+        </div>
+        <div class="data-row">
+          <div class="d-label">Creación</div><div class="d-val">xx.xx.xx</div>
+        </div>
+      </div>
+      <div class="exp-row">
+        <div class="exp-label">Progreso</div>
+        <div class="exp-track"><div class="exp-fill" id="expBar" style="width: 0%;"></div></div>
+      </div>
+    </div>
+
+    <!-- Historia -->
+    <div class="s-block accent-left reveal-right in" id="rR1" style="transition-delay:.1s">
+      <div style="padding:10px 12px 0;">
+        <div class="s-title">❄ &nbsp;Historia</div>
+      </div>
+      <div class="text-block">
+        De todos los señores que gobernaron Invernalia durante el reinado de Daeron II, pocos llegaron al poder por un camino tan estrecho como Cregan, hijo de Edric Stark. Su padre murió cuando él contaba apenas once años. Su tío se arrogó la regencia con el pretexto de guiar al heredero, aunque los más perspicaces vieron que aquella tutela olía más a ambición que a deber.
+      </div>
+    </div>
+
+    <!-- Físico + Psique -->
+    <div class="two-col reveal-right in" id="rR2" style="padding:0;gap:9px;transition-delay:.2s">
+      <div class="s-block accent-subtle" style="flex:1">
+        <div style="padding:10px 12px 0;">
+          <div class="s-title">❄ &nbsp;Físico</div>
+        </div>
+        <div class="text-block">
+          Alto, de complexión robusta y ancho de hombros. Cabello oscuro y ondulado cortado sin vanidad. Ojos grises del color del cielo norteño antes de la tormenta. Rostro anguloso, facciones marcadas, piel curtida por los inviernos de Invernalia. Vestía con la austeridad propia de su casa: pieles gruesas, cuero bien trabajado y lana oscura.
+        </div>
+      </div>
+      <div class="s-block accent-subtle" style="flex:1">
+        <div style="padding:10px 12px 0;">
+          <div class="s-title">❄ &nbsp;Psique</div>
+        </div>
+        <div class="text-block">
+          Tenía el don de escuchar a sus hombres con la misma atención que prestaba a sus bannermen más veteranos. Justo en sus juicios sin distinguir entre el humilde y el poderoso. Los años de tutela lo dotaron de una desconfianza templada por la razón. Valiente en la guerra pero no temerario, prefiriendo siempre la disputa resuelta con palabras a la resuelta con acero.
+        </div>
+      </div>
+    </div>
+
+    <!-- Banner image divider -->
+    <img class="banner-div reveal in" id="rBan" src="./index_files/U3lvavo.png" alt="" style="transition-delay:.25s">
+
+    <!-- Habilidades + Inventario -->
+    <div class="two-col reveal-right in" id="rR3" style="padding:0;gap:9px;transition-delay:.3s">
+      <div class="s-block accent-subtle" style="flex:1">
+        <div style="padding:10px 12px 6px;">
+          <div class="s-title">⚔ &nbsp;Habilidades</div>
+        </div>
+        <div style="padding:0 12px 12px;">
+          <div class="hab-item">Hab. primaria: ✦ [Rama] — Desc.</div>
+          <div class="hab-item">Hab. secundaria: ✦ [Rama] — Desc.</div>
+          <div class="hab-item">Básicas: ✦ [Hab 1] ✦ [Hab 2]</div>
+          <div class="hab-item">Pasivas: [Nombre] — Desc.</div>
+          <div class="hab-item">Activas: ✦ [Hab 1] ✦ [Hab 2]</div>
+        </div>
+      </div>
+      <div class="s-block accent-subtle" style="flex:1">
+        <div style="padding:10px 12px 6px;">
+          <div class="s-title">🗡 &nbsp;Inventario</div>
+        </div>
+        <div style="padding:0 12px 12px;">
+          <div class="hab-item">Hielo (espada bastarda valyria)</div>
+          <div class="hab-item" style="opacity:.5;">—</div>
+          <div class="hab-item" style="opacity:.5;">—</div>
+          <div class="hab-item">Monedas: —</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Características + Vínculos -->
+    <div class="two-col reveal-right in" id="rR4" style="padding:0;gap:9px;transition-delay:.4s">
+      <div class="s-block accent-subtle" style="flex:1.4">
+        <div style="padding:10px 12px 6px;">
+          <div class="s-title">❄ &nbsp;Características</div>
+        </div>
+        <div style="padding:0 12px 4px;">
+          <div class="char-item"><span class="char-label">[Origen]</span> Descendiente de los Primeros Hombres</div>
+          <div class="char-item"><span class="char-label">[Región]</span> El Norte</div>
+          <div class="char-item"><span class="char-label">[Religión]</span> Dioses Antiguos</div>
+          <div class="char-item"><span class="char-label">[Clase social]</span> Noble</div>
+          <div class="char-item"><span class="char-label">[Constitución]</span> Fuerte</div>
+          <div class="char-item"><span class="char-label">[Virtud]</span> Líder (−3)</div>
+          <div class="char-item"><span class="char-label">[Virtud]</span> Valiente (−3)</div>
+        </div>
+        <div style="padding:8px 12px 6px;">
+          <div class="s-title">❄ &nbsp;Vínculos</div>
+        </div>
+        <div style="padding:0 12px 12px;">
+          <div class="char-item"><span class="char-label">[Familia]</span> Herald Stark</div>
+          <div class="char-item"><span class="char-label">[Familia]</span> Theoden Stark</div>
+          <div class="char-item"><span class="char-label">[Familia]</span> Briyenn Stark</div>
+        </div>
+      </div>
+      <div class="s-block accent-subtle" style="flex:1;display:flex;flex-direction:column;">
+        <div style="padding:10px 12px 6px;">
+          <div class="s-title">❄ &nbsp;House Stark</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 16px;">
+          <img src="./index_files/kZvWHB1.png" alt="House Stark" style="width:90px;filter:brightness(0) invert(.55);margin-bottom:10px;">
+          <div style="font-family:&#39;IM Fell English&#39;,serif;font-style:italic;font-size:.78rem;color:var(--accent);text-align:center;letter-spacing:.04em;">Winter is Coming</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dados -->
+    <div class="s-block reveal-right in" id="rR5" style="transition-delay:.48s">
+      <div style="padding:10px 12px 0;">
+        <div class="s-title">❄ &nbsp;Dados</div>
+      </div>
+      <div class="dados-row">
+        <div class="dado-item">
+          <div class="dado-name">Vigor</div>
+          <div class="dado-val">d20</div>
+        </div>
+        <div class="dado-item">
+          <div class="dado-name">Destreza</div>
+          <div class="dado-val">d20</div>
+        </div>
+        <div class="dado-item">
+          <div class="dado-name">Astucia</div>
+          <div class="dado-val">d20</div>
+        </div>
+        <div class="dado-item">
+          <div class="dado-name">Social</div>
+          <div class="dado-val">d20</div>
+        </div>
+        <div class="dado-item">
+          <div class="dado-name">Int.</div>
+          <div class="dado-val">d20</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quote banner -->
+    <div class="quote-banner reveal in" id="rQ" style="transition-delay:.54s">
+      They wish now not for the good of the realm, but for the satisfaction of vengeance.
+    </div>
+
+    <!-- Historial -->
+    <div class="s-block accent-left reveal-right in" id="rR6" style="transition-delay:.6s">
+      <div style="padding:10px 12px 0;">
+        <div class="s-title">❄ &nbsp;Historial</div>
+      </div>
+      <div class="log-wrap">
+        <div class="log-entry">
+          <div class="log-date">xx.xx.xx</div>
+          <div class="log-text">
+            Cregan Stark inicia en TOWRPG. Obtiene
+            <span class="exp-g">+400 EXP</span> y
+            <span class="exp-y">+200 dragones.</span>
+          </div>
+        </div>
+      </div>
+      <div class="motto-bottom">
+        Que los Antiguos Dioses guarden el Norte &nbsp;❄
+      </div>
+    </div>
+
+  </div><!-- /panel-right -->
+</div><!-- /sheet-wrap -->
+
+<script>
+let opened = false;
+
+function openSheet(){
+  if(opened) return;
+  opened = true;
+
+  document.getElementById('intro').classList.add('hide');
+
+  const wrap = document.getElementById('sheet-wrap');
+  setTimeout(()=>{
+    wrap.classList.add('show');
+
+    // Left panel
+    setTimeout(()=>{ document.getElementById('rL0').classList.add('in'); }, 50);
+
+    // Divider
+    setTimeout(()=>{ document.getElementById('rDiv').classList.add('in'); }, 200);
+
+    // Right panel blocks
+    const rightIds = ['rR0','rR1','rR2','rBan','rR3','rR4','rR5','rQ','rR6'];
+    rightIds.forEach((id,i)=>{
+      setTimeout(()=>{
+        const el = document.getElementById(id);
+        if(el) el.classList.add('in');
+      }, 280 + i * 130);
+    });
+
+    // Exp bar
+    setTimeout(()=>{
+      document.getElementById('expBar').style.width = '0%';
+    }, 700);
+
+  }, 820);
+}
+
+// Auto open after 4s
+setTimeout(openSheet, 4000);
+</script>
+
+
+</body></html>
